@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        {/* TODO: This is ThemeProvider for dark mode */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
