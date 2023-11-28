@@ -3,5 +3,6 @@
 import { withAuth } from "next-auth/middleware";
 export default withAuth;
 export const config = {
+    //TODO: These is the protected routes endpoint 
   matchers: ["/chat", "/chat/:id*", "/register"],
 };
