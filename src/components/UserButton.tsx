@@ -14,7 +14,7 @@ function UserButton() {
     <DropdownMenu>
       <DropdownMenuTrigger>
         {/* TODO: Apply the UserAvatar here */}
-        <UserAvatar />
+        <UserAvatar name="Nabil Adib" image="https://github.com/shadcn.png" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
