@@ -10,6 +10,7 @@ import UserAvatar from "./UserAvatar";
 
 //  TODO: User profile
 function UserButton() {
+    // TODO:  Create session for authentication with NextAuth
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
