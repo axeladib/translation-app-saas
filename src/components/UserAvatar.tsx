@@ -12,8 +12,8 @@ function UserAvatar({
   image,
   className,
 }: {
-  name: string;
-  image: string;
+  name?: string | null;
+  image?: string | null;
   className?: string;
 }) {
   return (
@@ -24,12 +24,15 @@ function UserAvatar({
           src={image}
           width={40}
           height={40}
-          alt={name}
+          alt={name || "user name"}
           className="rounded-full"
         />
       )}
       {/* <AvatarImage src="https://github.com/shadcn.png" /> */}
-      <AvatarFallback delayMs={1000} className="dark: bg-white dark:text-black text-lg">
+      <AvatarFallback
+        delayMs={1000}
+        className="dark: bg-white dark:text-black text-lg"
+      >
         {/* TODO: Take each of first char of each first and second name */}
         {/* TODO: Merge first char of each first and second name */}
         {name

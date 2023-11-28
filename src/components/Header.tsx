@@ -5,14 +5,15 @@ import UserButton from "./UserButton";
 import { authOptions } from "../../auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { MessageSquareIcon } from "lucide-react";
+import { MessagesSquare } from "lucide-react";
+import CreateChatButton from "./CreateChatButton";
 
 async function Header() {
   const session = await getServerSession(authOptions);
   console.log(session);
   return (
-    <header className="sticky top-0 z-50 bg-white dark:bg-gray-500">
-      <nav className="flex flex-col sm:flex-row items-center p-5 p1-2 bg-white dark:bg-gray-500 max-w-7xl mx-auto">
+    <header className="sticky top-0 z-50 bg-white dark:bg-gray-900">
+      <nav className="flex flex-col sm:flex-row items-center p-5 p1-2 bg-white dark:bg-gray-900 max-w-7xl mx-auto">
         <Logo />
         <div className="flex-1 flex items-center justify-end space-x-4">
           {/* TODO: Language Selection */}
@@ -21,8 +22,10 @@ async function Header() {
             <>
               {/* TODO: This route will be redirect to this if session is true */}
               <Link href="/chat" prefetch={false}>
-                <MessageSquareIcon className="text-black dark:text-white" />
+                <MessagesSquare  className="text-black dark:text-white" />
               </Link>
+              {/* TODO: CreateChatButton Component */}
+              <CreateChatButton/>
             </>
           ): (
             <Link href="/pricing">

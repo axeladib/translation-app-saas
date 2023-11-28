@@ -21,7 +21,7 @@ export default function RootLayout({
     //TODO: ClientProviders components wrap entire application allow use to use useSession and getServer
     <ClientProviders>
       <html lang="en">
-        <body className={inter.className}>
+        <body className="flex flex-col min-h-screen">
           {/* TODO: This is ThemeProvider for dark mode */}
           <ThemeProvider
             attribute="class"
