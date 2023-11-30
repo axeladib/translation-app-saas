@@ -6,11 +6,15 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 //TODO: Store authetication object that we expect
 export const authOptions: NextAuthOptions = {
-    //This is for Google Auth configuration
+  //This is for Google Auth configuration
   providers: [
     GoogleProvider({
       clientId: googleClientId || "",
       clientSecret: googleClientSecret || "",
     }),
   ],
+  // Change the strategy to "jwt"
+  session: {
+    strategy: "jwt",
+  },
 } satisfies NextAuthOptions;
