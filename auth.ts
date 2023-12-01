@@ -2,7 +2,7 @@ import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { adminDb } from "./firebase-admin";
-
+import { adminAuth } from "./firebase-admin";
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
@@ -15,6 +15,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: googleClientSecret || "",
     }),
   ],
+  //TODO: This code provide the custom jwt token id inside the firebase Auth
   //Make the user Google Account appear inside the firebase authentication
   callbacks: {
     //It receives an object with properties session and token.
@@ -23,7 +24,13 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       if (session?.user) {
         if (token.sub) {
+          //token.sub from jwt replace the user id inside the firebase
           session.user.id = token.sub;
+
+          //create the custom firebase token
+          const firebaseToken = await adminAuth.createCustomToken(token.sub);
+          //replace the firebase token to the custom that we create from jwt
+          session.firebaseToken = firebaseToken;
         }
       }
       return session;

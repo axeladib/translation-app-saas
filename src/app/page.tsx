@@ -3,9 +3,9 @@ import Link from "next/link";
 import { authOptions } from "../../auth";
 import { getServerSession } from "next-auth";
 
-export default function Home() {
+export default async function Home() {
   //Get the session id from firebase
-  const session = getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
   console.log(session);
 
   return (
