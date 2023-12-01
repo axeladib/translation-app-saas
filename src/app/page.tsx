@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { authOptions } from "../../auth";
+import { getServerSession } from "next-auth";
 
 export default function Home() {
+  //Get the session id from firebase
+  const session = getServerSession(authOptions);
+  console.log(session);
+
   return (
     <main className="">
       <div className="relative isolate pt-14 dark:bg-gray-900">
