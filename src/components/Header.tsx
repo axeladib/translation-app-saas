@@ -2,7 +2,7 @@ import React from "react";
 import Logo from "./Logo";
 import DarkModeToggle from "./DarkModeToggle";
 import UserButton from "./UserButton";
-import { authOptions } from "../../auth";
+import { authOptions } from "../auth";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { MessagesSquare } from "lucide-react";
@@ -22,15 +22,13 @@ async function Header() {
             <>
               {/* TODO: This route will be redirect to this if session is true */}
               <Link href="/chat" prefetch={false}>
-                <MessagesSquare  className="text-black dark:text-white" />
+                <MessagesSquare className="text-black dark:text-white" />
               </Link>
               {/* TODO: CreateChatButton Component */}
-              <CreateChatButton/>
+              <CreateChatButton />
             </>
-          ): (
-            <Link href="/pricing">
-              Pricing
-            </Link>
+          ) : (
+            <Link href="/pricing">Pricing</Link>
           )}
           {/* TODO: Darkmode Toggle */}
           <DarkModeToggle />

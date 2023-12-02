@@ -1,8 +1,8 @@
 import { FirestoreAdapter } from "@auth/firebase-adapter";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { adminDb } from "./firebase-admin";
-import { adminAuth } from "./firebase-admin";
+import { adminDb } from "../firebase-admin";
+import { adminAuth } from "../firebase-admin";
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 

@@ -1,5 +1,5 @@
 import PricingCards from "@/components/PricingCards";
-import { authOptions } from "../../../auth";
+import { authOptions } from "../../auth";
 import { getServerSession } from "next-auth";
 
 async function Register() {
@@ -36,7 +36,7 @@ async function Register() {
         </div>
       </div>
       {/* Redirect is set to false to execute ACTION */}
-      <PricingCards redirect={false}/>
+      <PricingCards redirect={false} />
     </div>
   );
 }

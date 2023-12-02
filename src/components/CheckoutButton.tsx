@@ -1,12 +1,25 @@
 "use client";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 import { useSession } from "next-auth/react";
+import { useState } from "react";       
 
 function CheckoutButton() {
   const { data: session } = useSession();
-
+  const [loading, setLoading] = useState(false);
   const createCheckoutSession = async () => {
     if (!session) return;
+    setLoading(true);
     //TODO: push a document into the firestore db
+    //Add new document with auto-generated id
+    const docRef = await addDoc(
+      collection(db, "customers", session.user.id, "checkout_session"),
+      {
+        price: "",
+        success_url: window.location.origin,
+        cancel_url: window.location.origin,
+      }
+    );
     //TODO: ... stripe extension on firebase will create checkout session
     //TODO: redirect user to checkout page
   };
