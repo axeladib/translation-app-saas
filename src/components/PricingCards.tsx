@@ -21,7 +21,7 @@ const tiers = [
   },
   {
     name: "Pro",
-    id: "si_56019452-8ced-454e-b8fd-7762d2bfee5d",
+    id: "pro",
     href: "#",
     priceMonthly: "RM10",
     description: "Unlock the Full Potential with Pro!",
@@ -88,9 +88,16 @@ function PricingCards({ redirect }: { redirect: boolean | null }) {
               </ul>
             </div>
             {/* TODO: Get Started button today here */}
-            {redirect ? (<Link href="/register" className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 foucs-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer disabled:opacity-80">
+            {redirect ? (
+              <Link
+                href="/register"
+                className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 foucs-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer disabled:opacity-80"
+              >
                 Get Started Today
-            </Link>):(tier.id && <CheckoutButton/>)}
+              </Link>
+            ) : (
+              tier.id && <CheckoutButton />
+            )}
           </div>
         ))}
       </div>

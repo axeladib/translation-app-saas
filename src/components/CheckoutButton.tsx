@@ -1,8 +1,8 @@
 "use client";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useSession } from "next-auth/react";
-import { useState } from "react";       
+import { useState } from "react";
 
 function CheckoutButton() {
   const { data: session } = useSession();
@@ -13,14 +13,34 @@ function CheckoutButton() {
     //TODO: push a document into the firestore db
     //Add new document with auto-generated id
     const docRef = await addDoc(
-      collection(db, "customers", session.user.id, "checkout_session"),
+      // "customers" is a path in Firestore that store the Stripe's customers details
+      collection(db, "customers", session.user.id, "checkout_sessions"),
       {
-        price: "",
+        //price API ID from stripe for Pro Membership
+        price: "price_1OJ7P0BFlG5pJlzI6eUefuAC",
         success_url: window.location.origin,
         cancel_url: window.location.origin,
       }
     );
     //TODO: ... stripe extension on firebase will create checkout session
+    return onSnapshot(docRef, (snap) => {
+      const data = snap.data();
+      const url = data?.url;
+      const error = data?.error;
+
+      //if error detected stop loading to checkout pgae
+      if (error) {
+        // show an error to customer
+        alert(`An error occurred ${error.message}`);
+        setLoading(false);
+      }
+
+      //if Stripe Checkout exist redirect it to the Checkout Session Page
+      if (url) {
+        window.location.assign(url);
+        setLoading(false);
+      }
+    });
     //TODO: redirect user to checkout page
   };
   return (
@@ -30,7 +50,7 @@ function CheckoutButton() {
         onClick={() => createCheckoutSession()}
         className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 foucs-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer disabled:opacity-80"
       >
-        Sign Up
+        {loading ? "loading..." : "Sign Up"}
       </button>
     </div>
   );
