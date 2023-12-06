@@ -35,13 +35,16 @@ export const LanguagesSupportedMap: Record<LanguagesSupported, string> = {
 };
 
 //TODO: Declare the states for Subscription
+
 interface SubscriptionState {
   subscription: Subscription | null | undefined;
-  setSubscription: (Subscription: Subscription | null) => void;
+  // FIXME: subscription properties cant be read
+  setSubscription: (subscription: Subscription | null) => void;
 }
 //TODO: Set and Interact the Global State for Subscription
 // This hooks can be used anywhere
+// Custom state 
 export const useSubscriptionStore = create<SubscriptionState>((set) => ({
-  subscription: null,
+  subscription: undefined,
   setSubscription: (subscription: Subscription | null) => set({ subscription }),
 }));

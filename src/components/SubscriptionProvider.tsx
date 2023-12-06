@@ -36,8 +36,8 @@ function SubscriptionProvider({ children }: { children: React.ReactNode }) {
         console.log("Error getting document:", error);
       }
     );
-  }),
-    [session, setSubscription];
+  }, [session, setSubscription]);
+
   return <>{children}</>;
 }
 

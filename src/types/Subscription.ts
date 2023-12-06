@@ -11,6 +11,7 @@ export interface Subscription {
     [name: string]: string;
   };
   stripeLink: string;
+  // FIXME: Cant read this property
   role: string | null;
   quantity: number;
   items: Stripe.SubscriptionItem[];

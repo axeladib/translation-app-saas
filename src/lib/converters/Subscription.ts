@@ -50,6 +50,8 @@ const subscriptionConverter: FirestoreDataConverter<Subscription> = {
   },
 };
 
+// Access to the subscription path
+// Then include the the Stripe properties inside
 export const subscriptionRef = (userId: string)=>(
   collection(db,"customers",userId, "subscriptions").withConverter(
     subscriptionConverter

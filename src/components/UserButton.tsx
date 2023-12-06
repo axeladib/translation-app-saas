@@ -11,10 +11,16 @@ import {
 import UserAvatar from "./UserAvatar";
 import { Session } from "next-auth";
 import { Button } from "./ui/button";
-import { signIn,signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { useSubscriptionStore } from "@/store/store";
+import LoadingSpinner from "./LoadingSpinner";
+import { StarIcon } from "lucide-react";
 
 //  TODO: User profile
 function UserButton({ session }: { session: Session | null }) {
+  // Listen to Stripe Subscription
+  const subscription = useSubscriptionStore((state) => state.subscription);
+
   // TODO:  Create session for authentication with NextAuth
   // ...Session
   //TODO: If the user Session is not exist rendering the SignIn Google button
@@ -26,24 +32,40 @@ function UserButton({ session }: { session: Session | null }) {
       </Button>
     );
   }
- //TODO: If session exist then render this
+  //TODO: If session exist then render this
   return (
     session && (
       <DropdownMenu>
         <DropdownMenuTrigger>
           {/* TODO: Apply the UserAvatar here */}
-          <UserAvatar
-            name={session.user?.name}
-            image={session.user?.image}
-          />
+          <UserAvatar name={session.user?.name} image={session.user?.image} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {/* <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem> */}
-          <DropdownMenuItem onClick={()=> signOut()}>Sign Out</DropdownMenuItem>
+
+          {/* TODO: Render loadingSpinner when subcription is undefined */}
+          {subscription === undefined && (
+            <DropdownMenuItem>
+              <LoadingSpinner />
+            </DropdownMenuItem>
+          )}
+          {/* TODO: Render StartIcon for pro member */}
+
+          {subscription?.role === "pro" && (
+            <>
+              <DropdownMenuLabel className="text-xs flex items-center justify-centerspace-x-1 text=[#E935C1] animate-pulse">
+                <StarIcon fill="#E935C1" />
+                <p>PRO</p>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>{/* <>ManageAccount</> */}</DropdownMenuItem>
+            </>
+          )}
+          {/* TODO: Render also manage account button */}
+          <DropdownMenuItem onClick={() => signOut()}>
+            Sign Out
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     )
