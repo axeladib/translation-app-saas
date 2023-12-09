@@ -1,4 +1,3 @@
-import { DocumentData, DocumentReference, Timestamp } from "firebase/firestore";
 import Stripe from "stripe";
 
 export interface Subscription {

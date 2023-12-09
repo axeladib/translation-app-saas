@@ -20,7 +20,9 @@ import { StarIcon } from "lucide-react";
 function UserButton({ session }: { session: Session | null }) {
   // Listen to Stripe Subscription
   const subscription = useSubscriptionStore((state) => state.subscription);
-
+  // FIXME: Check user have subcription
+  console.log(`Output Role ${subscription?.id}`);
+  console.log(`Output Items ${subscription?.role}`);
   // TODO:  Create session for authentication with NextAuth
   // ...Session
   //TODO: If the user Session is not exist rendering the SignIn Google button
@@ -41,7 +43,7 @@ function UserButton({ session }: { session: Session | null }) {
           <UserAvatar name={session.user?.name} image={session.user?.image} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>{session.user?.name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
           {/* TODO: Render loadingSpinner when subcription is undefined */}
@@ -59,7 +61,7 @@ function UserButton({ session }: { session: Session | null }) {
                 <p>PRO</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>{/* <>ManageAccount</> */}</DropdownMenuItem>
+              <DropdownMenuItem>Manage</DropdownMenuItem>
             </>
           )}
           {/* TODO: Render also manage account button */}

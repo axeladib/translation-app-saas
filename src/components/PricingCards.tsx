@@ -23,7 +23,7 @@ const tiers = [
     name: "Pro",
     id: "pro",
     href: "#",
-    priceMonthly: "RM10",
+    priceMonthly: "RM10.00",
     description: "Unlock the Full Potential with Pro!",
     features: [
       "Unlimited Messages in Chats",

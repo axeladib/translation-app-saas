@@ -4,14 +4,23 @@ import { db } from "../../firebase";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import LoadingSpinner from "./LoadingSpinner";
+import { useSubscriptionStore } from "@/store/store";
+import ManageAccountButton from "./ManageAccountButton";
 
 function CheckoutButton() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
+
+  //TODO: Implementing Pro Feature Restriction
+  const subscription = useSubscriptionStore((state) => state.subscription);
+  const isSubscribed =
+    subscription?.status === "active" && subscription?.role === "pro";
+  const isLoadingSubscription = subscription === undefined;
+  // TODO: Implementing Checkout wirh Stripe
   const createCheckoutSession = async () => {
     if (!session) return;
     setLoading(true);
-    //TODO: push a document into the firestore db
+    // push a document into the firestore db
     //Add new document with auto-generated id
     const docRef = await addDoc(
       // "customers" is a path in Firestore that store the Stripe's customers details
@@ -23,20 +32,19 @@ function CheckoutButton() {
         cancel_url: window.location.origin,
       }
     );
-    //TODO: ... stripe extension on firebase will create checkout session
+    // IMPORTANT: Listen to the webhook URL at the "customers/:id" path at FireStore
+    // This is when the listener of Stripe happened
+    // This link wil create the checkout session for the customers
     return onSnapshot(docRef, (snap) => {
       const data = snap.data();
       const url = data?.url;
       const error = data?.error;
 
-      //if error detected stop loading to checkout pgae
       if (error) {
-        // show an error to customer
-        alert(`An error occurred ${error.message}`);
+        alert(`An error occured: ${error.message}`);
         setLoading(false);
       }
 
-      //if Stripe Checkout exist redirect it to the Checkout Session Page
       if (url) {
         window.location.assign(url);
         setLoading(false);
@@ -52,7 +60,14 @@ function CheckoutButton() {
         onClick={() => createCheckoutSession()}
         className="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 foucs-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer disabled:opacity-80"
       >
-        {loading ? <LoadingSpinner /> : "Sign Up"}
+        {isSubscribed ? (
+          <ManageAccountButton />
+        ) : // Only for subcribe user
+        isLoadingSubscription || loading ? (
+          <LoadingSpinner />
+        ) : (
+          "Sign Up"
+        )}
       </button>
     </div>
   );
