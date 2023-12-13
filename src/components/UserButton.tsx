@@ -15,6 +15,7 @@ import { signIn, signOut } from "next-auth/react";
 import { useSubscriptionStore } from "@/store/store";
 import LoadingSpinner from "./LoadingSpinner";
 import { StarIcon } from "lucide-react";
+import ManageAccountButton from "./ManageAccountButton";
 
 //  TODO: User profile
 function UserButton({ session }: { session: Session | null }) {
@@ -61,7 +62,9 @@ function UserButton({ session }: { session: Session | null }) {
                 <p>PRO</p>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Manage</DropdownMenuItem>
+              <DropdownMenuItem>
+                <ManageAccountButton />
+              </DropdownMenuItem>
             </>
           )}
           {/* TODO: Render also manage account button */}
